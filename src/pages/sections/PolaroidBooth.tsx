@@ -61,19 +61,14 @@ export default function PolaroidBooth() {
         videoElement.setAttribute('playsinline', 'true');
         videoElement.autoplay = true;
         videoElement.muted = true;
-        videoElement.onloadedmetadata = async () => {
-          try {
-            await videoElement.play();
-            setCameraStatus('ready');
-          } catch (playError) {
-            console.warn('Autoplay prevented, waiting for user gesture', playError);
-            setCameraStatus('ready');
-          }
-        };
-      } else {
-        setCameraStatus('ready');
+        try {
+          await videoElement.play();
+        } catch (playError) {
+          console.warn('Autoplay prevented, waiting for user gesture', playError);
+        }
       }
 
+      setCameraStatus('ready');
       setCaptured(false);
       setImageData('');
     } catch (error) {
