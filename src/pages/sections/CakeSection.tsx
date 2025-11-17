@@ -157,7 +157,7 @@ export default function CakeSection({ onCakeCut, cakeCut }: CakeSectionProps) {
   return (
     <section
       style={sectionStyle}
-      className="py-20 px-4 relative"
+      className="py-12 sm:py-16 md:py-20 px-3 sm:px-4 relative"
     >
       {/* dreamy background orbs */}
       <div className="pointer-events-none absolute inset-0 -z-10 opacity-80 overflow-hidden">
@@ -171,12 +171,12 @@ export default function CakeSection({ onCakeCut, cakeCut }: CakeSectionProps) {
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1, delay: 0.3 }}
-        className="absolute top-16 left-4 md:left-12 z-0 pointer-events-none"
+        className="hidden sm:block absolute top-16 left-4 md:left-12 z-0 pointer-events-none"
         style={{ willChange: 'transform' }}
       >
         <motion.img
           src="/gifs/2.gif"
-          className="w-20 md:w-28 drop-shadow-2xl rounded-lg"
+          className="w-16 sm:w-20 md:w-28 drop-shadow-2xl rounded-lg"
           alt="blushing"
           animate={{ y: [-8, 8, -8], rotate: [-5, 5, -5] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -187,12 +187,12 @@ export default function CakeSection({ onCakeCut, cakeCut }: CakeSectionProps) {
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 0.5 }}
-        className="absolute top-16 right-4 md:right-12 z-0 pointer-events-none"
+        className="hidden sm:block absolute top-16 right-4 md:right-12 z-0 pointer-events-none"
         style={{ willChange: 'transform' }}
       >
         <motion.img
           src="/gifs/1.gif"
-          className="w-20 md:w-28 drop-shadow-2xl rounded-lg"
+          className="w-16 sm:w-20 md:w-28 drop-shadow-2xl rounded-lg"
           alt="waving"
           animate={{ y: [-10, 10, -10], rotate: [5, -5, 5] }}
           transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
@@ -253,10 +253,10 @@ export default function CakeSection({ onCakeCut, cakeCut }: CakeSectionProps) {
           </div>
         </motion.div>
 
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-3">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-gray-800 mb-3">
           {!cakeCut ? 'Make a wish and cut the cake! 🎂' : 'Enjoy your special day! 🎉'}
         </h2>
-        <p className="text-center text-gray-600 mb-8 max-w-xl mx-auto">
+        <p className="text-center text-sm sm:text-base text-gray-600 mb-6 sm:mb-8 max-w-xl mx-auto px-4">
           Tap the cake and watch the magic happen with sparkles, slices, and confetti made just for you.
         </p>
 
@@ -272,8 +272,8 @@ export default function CakeSection({ onCakeCut, cakeCut }: CakeSectionProps) {
 
           <div
             ref={containerRef}
-            className="relative rounded-[28px] bg-white/5 backdrop-blur-[26px] shadow-[0_25px_60px_rgba(244,114,182,0.35)] overflow-hidden border border-white/40"
-            style={{ aspectRatio: '1/1', ...cakeBodyStyle }}
+            className="relative rounded-2xl sm:rounded-[28px] bg-white/5 backdrop-blur-[26px] shadow-[0_25px_60px_rgba(244,114,182,0.35)] overflow-hidden border border-white/40"
+            style={{ aspectRatio: '1/1', ...cakeBodyStyle, touchAction: 'none' }}
             onPointerDown={startCut}
             onPointerMove={moveCut}
             onPointerUp={endCut}
@@ -469,7 +469,7 @@ export default function CakeSection({ onCakeCut, cakeCut }: CakeSectionProps) {
           {!cakeCut && (
             <>
               <motion.div
-                className="text-center mt-4 text-gray-600 font-semibold"
+                className="text-center mt-3 sm:mt-4 text-sm sm:text-base text-gray-600 font-semibold px-4"
                 animate={{ scale: [1, 1.05, 1], y: [0, -4, 0] }}
                 transition={{ duration: 1.5, repeat: Infinity }}
               >
@@ -480,7 +480,7 @@ export default function CakeSection({ onCakeCut, cakeCut }: CakeSectionProps) {
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={completeCut}
-                  className="mx-auto mt-4 px-6 py-3 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-semibold rounded-full shadow-lg flex items-center gap-2"
+                  className="mx-auto mt-3 sm:mt-4 px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-pink-500 to-purple-500 text-white text-sm sm:text-base font-semibold rounded-full shadow-lg flex items-center gap-2"
                 >
                   ✨ Slice it for me
                 </motion.button>

@@ -94,18 +94,18 @@ export default function Scrapbook() {
   };
 
   return (
-    <section className="py-16 px-4 bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50">
+    <section className="py-12 sm:py-16 px-3 sm:px-4 bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50">
       <div className="max-w-5xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-8"
+          className="text-center mb-6 sm:mb-8"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-3">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-2 sm:mb-3">
             Digital Scrapbook 📖✨
           </h2>
-          <p className="text-lg text-gray-600">
+          <p className="text-base sm:text-lg text-gray-600">
             Decorate this page with stickers and make it yours!
           </p>
         </motion.div>
@@ -115,23 +115,23 @@ export default function Scrapbook() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="space-y-4 mb-8"
+          className="space-y-3 sm:space-y-4 mb-6 sm:mb-8"
         >
-          <div className="flex flex-wrap justify-center gap-3 bg-white/80 backdrop-blur-lg rounded-2xl p-6 shadow-lg">
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 bg-white/80 backdrop-blur-lg rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg">
             {availableStickers.map((emoji) => (
               <motion.button
                 key={emoji}
                 whileHover={{ scale: 1.2 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => addSticker(emoji)}
-                className="text-4xl cursor-pointer hover:drop-shadow-lg transition-all"
+                className="text-3xl sm:text-4xl cursor-pointer hover:drop-shadow-lg transition-all min-w-[44px] min-h-[44px] flex items-center justify-center"
               >
                 {emoji}
               </motion.button>
             ))}
           </div>
 
-          <div className="bg-white/80 backdrop-blur-lg rounded-2xl p-5 shadow-lg flex flex-wrap items-center gap-4 justify-between text-sm">
+          <div className="bg-white/80 backdrop-blur-lg rounded-xl sm:rounded-2xl p-4 sm:p-5 shadow-lg flex flex-wrap items-center gap-3 sm:gap-4 justify-between text-xs sm:text-sm">
             <div className="flex items-center gap-2">
               <label className="font-semibold text-gray-600 uppercase tracking-wide text-xs">
                 Pen Color
@@ -161,7 +161,7 @@ export default function Scrapbook() {
             </div>
             <button
               onClick={clearCanvas}
-              className="px-4 py-2 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 text-white font-semibold shadow-md"
+              className="px-3 sm:px-4 py-2 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 text-white text-xs sm:text-sm font-semibold shadow-md"
             >
               Clear Pen
             </button>
@@ -173,9 +173,10 @@ export default function Scrapbook() {
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="relative bg-white rounded-3xl shadow-2xl overflow-hidden border-8 border-pink-200"
+          className="relative bg-white rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden border-4 sm:border-8 border-pink-200"
           style={{
-            minHeight: '600px',
+            minHeight: '400px',
+            height: 'clamp(400px, 60vh, 600px)',
             backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(251, 207, 232, 0.3), transparent 50%), radial-gradient(circle at 80% 80%, rgba(199, 210, 254, 0.3), transparent 50%)',
           }}
         >
@@ -217,7 +218,7 @@ export default function Scrapbook() {
               animate={{ scale: 1, x: sticker.x, y: sticker.y }}
               whileHover={{ scale: 1.3, rotate: 5 }}
               whileTap={{ scale: 0.95 }}
-              className="absolute text-5xl cursor-move select-none"
+              className="absolute text-4xl sm:text-5xl cursor-move select-none"
               style={{ touchAction: 'none' }}
             >
               {sticker.emoji}
@@ -227,7 +228,7 @@ export default function Scrapbook() {
           {/* Instructions */}
           {placedStickers.length === 0 && (
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <p className="text-gray-400 text-xl text-center px-4">
+              <p className="text-gray-400 text-base sm:text-lg md:text-xl text-center px-4">
                 Click stickers above to add them, then drag to arrange! 🎨
               </p>
             </div>

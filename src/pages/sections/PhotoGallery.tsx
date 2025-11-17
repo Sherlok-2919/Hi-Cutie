@@ -30,19 +30,19 @@ export default function PhotoGallery() {
   }, []);
 
   return (
-    <section className="py-20 px-2 sm:px-4 bg-gradient-to-br from-gray-900 via-purple-900 to-pink-900 text-white relative">
+    <section className="py-12 sm:py-16 md:py-20 px-2 sm:px-4 bg-gradient-to-br from-gray-900 via-purple-900 to-pink-900 text-white relative">
       {/* Floating GIFs in gallery */}
       <motion.div
         initial={{ opacity: 0, x: -50 }}
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 1, delay: 0.3 }}
-        className="absolute top-16 right-4 md:right-12 pointer-events-none z-30"
+        className="hidden sm:block absolute top-16 right-4 md:right-12 pointer-events-none z-30"
         style={{ willChange: 'transform' }}
       >
         <motion.img
           src="/gifs/2.gif"
-          className="w-20 md:w-28 drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] rounded-lg"
+          className="w-16 sm:w-20 md:w-28 drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] rounded-lg"
           alt="blushing"
           animate={{ y: [-12, 12, -12], rotate: [6, -6, 6] }}
           transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
@@ -54,12 +54,12 @@ export default function PhotoGallery() {
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 1, delay: 0.5 }}
-        className="absolute bottom-16 left-4 md:left-12 pointer-events-none z-30"
+        className="hidden sm:block absolute bottom-16 left-4 md:left-12 pointer-events-none z-30"
         style={{ willChange: 'transform' }}
       >
         <motion.img
           src="/gifs/1.gif"
-          className="w-20 md:w-28 drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] rounded-lg"
+          className="w-16 sm:w-20 md:w-28 drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] rounded-lg"
           alt="waving"
           animate={{ y: [-10, 10, -10], scale: [1, 1.06, 1] }}
           transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut" }}
@@ -75,24 +75,24 @@ export default function PhotoGallery() {
           className="text-center mb-16"
         >
           <div className="flex items-center justify-center gap-3 mb-4">
-            <Camera className="w-10 h-10 text-pink-400" />
-            <h2 className="text-5xl md:text-6xl font-bold">
+            <Camera className="w-8 h-8 sm:w-10 sm:h-10 text-pink-400" />
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold">
               Our Memories
             </h2>
-            <Heart className="w-10 h-10 text-pink-400 fill-pink-400" />
+            <Heart className="w-8 h-8 sm:w-10 sm:h-10 text-pink-400 fill-pink-400" />
           </div>
-          <p className="text-xl text-pink-200">
+          <p className="text-base sm:text-lg md:text-xl text-pink-200">
             Every moment with you is special ✨
           </p>
         </motion.div>
 
         <div className="relative">
-          <div className="overflow-hidden rounded-[0px] sm:rounded-[24px] border border-white/10 bg-white/5 backdrop-blur-lg p-2 sm:p-6 shadow-2xl">
+          <div className="overflow-hidden rounded-none sm:rounded-2xl md:rounded-[24px] border border-white/10 bg-white/5 backdrop-blur-lg p-1 sm:p-2 md:p-6 shadow-2xl">
             {/* Top glow */}
-            <div className="absolute inset-x-0 top-6 sm:top-10 h-20 sm:h-24 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-pink-500/20 blur-3xl opacity-70 pointer-events-none" />
+            <div className="absolute inset-x-0 top-4 sm:top-6 md:top-10 h-16 sm:h-20 md:h-24 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-pink-500/20 blur-3xl opacity-70 pointer-events-none" />
 
             {/* Endless carousel */}
-            <div className="space-y-10">
+            <div className="space-y-6 sm:space-y-8 md:space-y-10">
               {rows.map((row, rowIndex) => {
                 const duration = marqueeDuration + rowIndex * 6;
 
@@ -110,7 +110,7 @@ export default function PhotoGallery() {
                     {[...row, ...row].map((photo, index) => (
                       <div
                         key={`${rowIndex}-${index}-${photo.id}`}
-                        className="group relative flex-shrink-0 w-[240px] xs:w-56 sm:w-64 md:w-72 h-[320px] sm:h-[420px] rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-black/20"
+                        className="group relative flex-shrink-0 w-48 xs:w-56 sm:w-64 md:w-72 h-64 xs:h-[320px] sm:h-[420px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-black/20"
                         onMouseEnter={() => pauseRow(rowIndex)}
                         onMouseLeave={() => resumeRow(rowIndex)}
                         onTouchStart={() => pauseRow(rowIndex)}
@@ -134,25 +134,25 @@ export default function PhotoGallery() {
                         </div>
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
 
-                        <div className="absolute inset-x-0 bottom-0 p-6">
-                          <div className="flex items-center gap-2 mb-3">
-                            <div className="w-1 h-10 bg-pink-400 rounded-full" />
+                        <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4 md:p-6">
+                          <div className="flex items-center gap-2 mb-2 sm:mb-3">
+                            <div className="w-1 h-6 sm:h-8 md:h-10 bg-pink-400 rounded-full" />
                             <div>
-                              <h3 className="text-2xl font-bold">{photo.title}</h3>
-                              <p className="text-sm text-pink-200">{photo.subtitle}</p>
+                              <h3 className="text-lg sm:text-xl md:text-2xl font-bold">{photo.title}</h3>
+                              <p className="text-xs sm:text-sm text-pink-200">{photo.subtitle}</p>
                             </div>
                           </div>
-                          <p className="text-xs text-white/60 uppercase tracking-[0.2em]">
+                          <p className="text-[10px] sm:text-xs text-white/60 uppercase tracking-[0.2em]">
                             Infinite Moments
                           </p>
                         </div>
 
-                        <div className="absolute top-4 right-4">
+                        <div className="absolute top-3 sm:top-4 right-3 sm:right-4">
                           <motion.div
                             animate={{ scale: [1, 1.15, 1] }}
                             transition={{ duration: 1.8, repeat: Infinity, repeatType: 'reverse' }}
                           >
-                            <Heart className="w-6 h-6 text-pink-400 fill-pink-400 drop-shadow-lg" />
+                            <Heart className="w-5 h-5 sm:w-6 sm:h-6 text-pink-400 fill-pink-400 drop-shadow-lg" />
                           </motion.div>
                         </div>
 

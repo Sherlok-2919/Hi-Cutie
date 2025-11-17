@@ -7,6 +7,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
   }
 
   body {
@@ -19,6 +20,16 @@
     background-repeat: no-repeat, repeat;
     background-size: cover, 120px 120px;
     background-attachment: fixed;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    touch-action: pan-y;
+  }
+  
+  @media (max-width: 768px) {
+    body {
+      background-attachment: scroll;
+      background-size: cover, 80px 80px;
+    }
   }
 
   h1, h2 {
@@ -31,6 +42,7 @@
 
   html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
   }
 
   @media (max-width: 640px) {
@@ -55,6 +67,14 @@
       border-radius: 1.5rem;
     }
   }
+  
+  /* Mobile-specific touch optimizations */
+  @media (pointer: coarse) {
+    button, a, [role="button"] {
+      min-height: 44px;
+      min-width: 44px;
+    }
+  }
 }
 
 .marquee-track {
@@ -63,6 +83,9 @@
   will-change: transform;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
 .animate-marquee-left {

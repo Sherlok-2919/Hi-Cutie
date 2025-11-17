@@ -112,24 +112,24 @@ export default function PolaroidBooth() {
   };
 
   return (
-    <section className="py-16 px-4 bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50">
+    <section className="py-12 sm:py-16 px-3 sm:px-4 bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50">
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-8 sm:mb-12"
         >
-          <Camera className="w-12 h-12 text-pink-500 mx-auto mb-4" />
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-3">
+          <Camera className="w-10 h-10 sm:w-12 sm:h-12 text-pink-500 mx-auto mb-3 sm:mb-4" />
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-2 sm:mb-3">
             Polaroid Photo Booth 📸
           </h2>
-          <p className="text-lg text-gray-600">
+          <p className="text-base sm:text-lg text-gray-600">
             Capture this special moment in a vintage polaroid frame!
           </p>
         </motion.div>
 
-        <div className="flex flex-col items-center gap-8">
+        <div className="flex flex-col items-center gap-6 sm:gap-8">
           {/* Polaroid Frame */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -137,10 +137,10 @@ export default function PolaroidBooth() {
             viewport={{ once: true }}
             className="relative"
           >
-            <div className="bg-white/95 p-4 pb-14 shadow-2xl rounded-[32px] w-full max-w-sm sm:max-w-md">
-              <div
+            <div className="bg-white/95 p-3 sm:p-4 pb-10 sm:pb-14 shadow-2xl rounded-2xl sm:rounded-[32px] w-full max-w-sm sm:max-w-md">
+                <div
                 id="capture-area"
-                className="aspect-square bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 flex items-center justify-center relative overflow-hidden rounded-2xl border border-white/70"
+                className="aspect-square bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 flex items-center justify-center relative overflow-hidden rounded-xl sm:rounded-2xl border border-white/70"
               >
                 {!captured && cameraStatus === 'ready' ? (
                   <video
@@ -159,30 +159,30 @@ export default function PolaroidBooth() {
                     style={{ filter: activeFilter }}
                   />
                 ) : (
-                  <div className="text-center p-8 text-gray-700 space-y-4">
-                    <VideoOff className="w-12 h-12 mx-auto text-pink-400" />
+                  <div className="text-center p-4 sm:p-8 text-gray-700 space-y-3 sm:space-y-4">
+                    <VideoOff className="w-10 h-10 sm:w-12 sm:h-12 mx-auto text-pink-400" />
                     <div>
-                      <h3 className="text-2xl font-bold mb-1">Camera access needed</h3>
-                      <p className="text-sm leading-relaxed">
+                      <h3 className="text-xl sm:text-2xl font-bold mb-1">Camera access needed</h3>
+                      <p className="text-xs sm:text-sm leading-relaxed px-2">
                         Tap&nbsp;
                         <span className="font-semibold text-pink-500">Enable Camera</span>
                         &nbsp;below and allow the permission prompt to take your photo.
                       </p>
                     </div>
                     {errorMessage && (
-                      <p className="text-sm text-rose-500 font-medium">{errorMessage}</p>
+                      <p className="text-xs sm:text-sm text-rose-500 font-medium px-2">{errorMessage}</p>
                     )}
                   </div>
                 )}
                 {cameraStatus === 'loading' && (
-                  <div className="absolute inset-0 bg-black/40 backdrop-blur-sm flex flex-col items-center justify-center text-white gap-2 text-sm">
-                    <div className="h-10 w-10 border-4 border-white/40 border-t-white rounded-full animate-spin" />
+                  <div className="absolute inset-0 bg-black/40 backdrop-blur-sm flex flex-col items-center justify-center text-white gap-2 text-xs sm:text-sm px-4">
+                    <div className="h-8 w-8 sm:h-10 sm:w-10 border-4 border-white/40 border-t-white rounded-full animate-spin" />
                     Connecting to your camera...
                   </div>
                 )}
               </div>
-              <div className="mt-4 text-center">
-                <p className="font-handwriting text-gray-700 text-lg">
+              <div className="mt-3 sm:mt-4 text-center">
+                <p className="font-handwriting text-gray-700 text-base sm:text-lg">
                   {new Date().toLocaleDateString('en-US', {
                     month: 'long',
                     day: 'numeric',
@@ -215,15 +215,15 @@ export default function PolaroidBooth() {
           </div>
 
           {/* Controls */}
-          <div className="flex flex-wrap gap-4 justify-center">
+          <div className="flex flex-wrap gap-3 sm:gap-4 justify-center">
             {cameraStatus !== 'ready' && !captured && (
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={startCamera}
-                className="px-6 py-3 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-semibold rounded-full shadow-lg flex items-center gap-2"
+                className="px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-pink-500 to-purple-500 text-white text-sm sm:text-base font-semibold rounded-full shadow-lg flex items-center gap-2"
               >
-                <Camera size={20} />
+                <Camera size={18} className="sm:w-5 sm:h-5" />
                 {cameraStatus === 'loading' ? 'Requesting Access...' : 'Enable Camera'}
               </motion.button>
             )}
@@ -233,9 +233,9 @@ export default function PolaroidBooth() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={captureMemory}
-                className="px-8 py-3 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-semibold rounded-full shadow-lg flex items-center gap-2"
+                className="px-6 sm:px-8 py-2.5 sm:py-3 bg-gradient-to-r from-pink-500 to-purple-500 text-white text-sm sm:text-base font-semibold rounded-full shadow-lg flex items-center gap-2"
               >
-                <Camera size={20} />
+                <Camera size={18} className="sm:w-5 sm:h-5" />
                 Capture Photo
               </motion.button>
             )}
@@ -249,7 +249,7 @@ export default function PolaroidBooth() {
                     setCaptured(false);
                     setImageData('');
                   }}
-                  className="px-8 py-3 bg-gray-500 text-white font-semibold rounded-full shadow-lg"
+                  className="px-6 sm:px-8 py-2.5 sm:py-3 bg-gray-500 text-white text-sm sm:text-base font-semibold rounded-full shadow-lg"
                 >
                   Retake
                 </motion.button>
@@ -257,9 +257,9 @@ export default function PolaroidBooth() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={downloadPhoto}
-                  className="px-8 py-3 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-semibold rounded-full shadow-lg flex items-center gap-2"
+                  className="px-6 sm:px-8 py-2.5 sm:py-3 bg-gradient-to-r from-pink-500 to-purple-500 text-white text-sm sm:text-base font-semibold rounded-full shadow-lg flex items-center gap-2"
                 >
-                  <Download size={20} />
+                  <Download size={18} className="sm:w-5 sm:h-5" />
                   Download
                 </motion.button>
               </>

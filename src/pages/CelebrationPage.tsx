@@ -51,17 +51,17 @@ export default function CelebrationPage({ name }: CelebrationPageProps) {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 50 }}
           transition={{ duration: 0.8 }}
-          className="text-center pt-12 pb-8 px-4 relative z-10"
+          className="text-center pt-8 sm:pt-10 md:pt-12 pb-6 sm:pb-8 px-3 sm:px-4 relative z-10"
         >
           <StaggeredHeading
             text={`Happy Birthday, ${name}!`}
-            className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-rose-500 to-fuchsia-600 drop-shadow-[0_10px_35px_rgba(244,114,182,0.45)] mb-4"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-rose-500 to-fuchsia-600 drop-shadow-[0_10px_35px_rgba(244,114,182,0.45)] mb-3 sm:mb-4"
           />
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
-            className="text-xl md:text-2xl text-gray-700"
+            className="text-lg sm:text-xl md:text-2xl text-gray-700"
           >
             Today is all about celebrating you! 🎉
           </motion.p>
