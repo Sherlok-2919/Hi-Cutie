@@ -12,6 +12,8 @@ export default function PhotoGallery() {
     { id: 7, src: '/photos/7.jpg', title: 'Golden Memories', subtitle: 'Time Stands Still', color: 'from-blue-400 to-pink-400' },
     { id: 8, src: '/photos/8.jpg', title: 'Forever Us', subtitle: 'Side by Side', color: 'from-rose-400 to-purple-400' },
     { id: 9, src: '/photos/9.jpg', title: 'Love Story', subtitle: 'Our Adventure', color: 'from-pink-400 to-blue-400' },
+    { id: 10, src: '/photos/10.jpg', title: 'Always & Forever', subtitle: 'Chapter Ten', color: 'from-purple-400 to-amber-400' },
+    { id: 11, src: '/photos/11.jpg', title: 'Always & Forever', subtitle: 'Chapter Eleven', color: 'from-purple-400 to-amber-400' },
   ];
 
   const rows = [photos, [...photos].reverse()];
