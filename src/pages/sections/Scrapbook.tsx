@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, type PanInfo } from 'framer-motion';
 
 interface StickerPosition {
@@ -12,6 +12,21 @@ export default function Scrapbook() {
   const availableStickers = ['🎈', '💖', '✨', '🎂', '🌸', '🎉', '⭐', '🎁', '💝', '🦋', '🌈', '🎪'];
   const [placedStickers, setPlacedStickers] = useState<StickerPosition[]>([]);
   const [nextId, setNextId] = useState(0);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [isDrawing, setIsDrawing] = useState(false);
+  const [penColor, setPenColor] = useState('#ec4899');
+  const [penSize, setPenSize] = useState(4);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = penColor;
+    ctx.lineWidth = penSize;
+  }, [penColor, penSize]);
 
   const addSticker = (emoji: string) => {
     setPlacedStickers([
@@ -35,6 +50,48 @@ export default function Scrapbook() {
       )
     );
   };
+  const getCanvasPoint = (event: React.MouseEvent | React.TouchEvent) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return null;
+    const rect = canvas.getBoundingClientRect();
+    const point = 'touches' in event
+      ? event.touches[0]
+      : ('changedTouches' in event ? event.changedTouches[0] : event);
+    return {
+      x: point.clientX - rect.left,
+      y: point.clientY - rect.top,
+    };
+  };
+
+  const startDrawing = (event: React.MouseEvent | React.TouchEvent) => {
+    const ctx = canvasRef.current?.getContext('2d');
+    const point = getCanvasPoint(event);
+    if (!ctx || !point) return;
+    ctx.beginPath();
+    ctx.moveTo(point.x, point.y);
+    setIsDrawing(true);
+  };
+
+  const draw = (event: React.MouseEvent | React.TouchEvent) => {
+    if (!isDrawing) return;
+    event.preventDefault();
+    const ctx = canvasRef.current?.getContext('2d');
+    const point = getCanvasPoint(event);
+    if (!ctx || !point) return;
+    ctx.lineTo(point.x, point.y);
+    ctx.stroke();
+  };
+
+  const endDrawing = () => {
+    setIsDrawing(false);
+  };
+
+  const clearCanvas = () => {
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext('2d');
+    if (!canvas || !ctx) return;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  };
 
   return (
     <section className="py-16 px-4 bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50">
@@ -53,24 +110,62 @@ export default function Scrapbook() {
           </p>
         </motion.div>
 
-        {/* Sticker Palette */}
+        {/* Controls */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="flex flex-wrap justify-center gap-3 mb-8 bg-white/80 backdrop-blur-lg rounded-2xl p-6 shadow-lg"
+          className="space-y-4 mb-8"
         >
-          {availableStickers.map((emoji) => (
-            <motion.button
-              key={emoji}
-              whileHover={{ scale: 1.2 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={() => addSticker(emoji)}
-              className="text-4xl cursor-pointer hover:drop-shadow-lg transition-all"
+          <div className="flex flex-wrap justify-center gap-3 bg-white/80 backdrop-blur-lg rounded-2xl p-6 shadow-lg">
+            {availableStickers.map((emoji) => (
+              <motion.button
+                key={emoji}
+                whileHover={{ scale: 1.2 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={() => addSticker(emoji)}
+                className="text-4xl cursor-pointer hover:drop-shadow-lg transition-all"
+              >
+                {emoji}
+              </motion.button>
+            ))}
+          </div>
+
+          <div className="bg-white/80 backdrop-blur-lg rounded-2xl p-5 shadow-lg flex flex-wrap items-center gap-4 justify-between text-sm">
+            <div className="flex items-center gap-2">
+              <label className="font-semibold text-gray-600 uppercase tracking-wide text-xs">
+                Pen Color
+              </label>
+              <input
+                type="color"
+                value={penColor}
+                onChange={(e) => setPenColor(e.target.value)}
+                className="w-10 h-10 rounded-full cursor-pointer border border-gray-200"
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <label htmlFor="pen-size" className="font-semibold text-gray-600 uppercase tracking-wide text-xs">
+                Pen Size
+              </label>
+              <input
+                id="pen-size"
+                type="range"
+                min={2}
+                max={12}
+                step={1}
+                value={penSize}
+                onChange={(e) => setPenSize(Number(e.target.value))}
+                className="accent-pink-500"
+              />
+              <span className="text-gray-500 w-6 text-right">{penSize}px</span>
+            </div>
+            <button
+              onClick={clearCanvas}
+              className="px-4 py-2 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 text-white font-semibold shadow-md"
             >
-              {emoji}
-            </motion.button>
-          ))}
+              Clear Pen
+            </button>
+          </div>
         </motion.div>
 
         {/* Scrapbook Page */}
@@ -94,6 +189,22 @@ export default function Scrapbook() {
               />
             ))}
           </div>
+
+          {/* Pen canvas */}
+          <canvas
+            ref={canvasRef}
+            width={1100}
+            height={700}
+            className="absolute inset-0 w-full h-full cursor-crosshair touch-none"
+            onMouseDown={startDrawing}
+            onMouseMove={draw}
+            onMouseUp={endDrawing}
+            onMouseLeave={endDrawing}
+            onTouchStart={startDrawing}
+            onTouchMove={draw}
+            onTouchEnd={endDrawing}
+            onTouchCancel={endDrawing}
+          />
 
           {/* Placed stickers */}
           {placedStickers.map((sticker) => (

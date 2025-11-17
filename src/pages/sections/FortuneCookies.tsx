@@ -9,14 +9,14 @@ interface Fortune {
 export default function FortuneCookies() {
   const fortunes: Fortune[] = [
     { id: 1, message: "Your smile is the most beautiful thing I've ever seen 😊" },
-    { id: 2, message: 'Every moment with you is a treasure 💎' },
-    { id: 3, message: 'You make the world a better place just by being in it 🌍' },
+    { id: 2, message: 'Every smile makes me Happy 💎' },
+    { id: 3, message: 'You make the Moments More Special 🕙' },
     { id: 4, message: 'Your kindness touches everyone around you 💕' },
     { id: 5, message: 'You are my sunshine on the cloudiest days ☀️' },
-    { id: 6, message: 'Together, we can conquer anything 🚀' },
-    { id: 7, message: 'Your laughter is my favorite sound 🎵' },
-    { id: 8, message: 'You inspire me to be better every day 🌟' },
-    { id: 9, message: 'With you, every day is an adventure 🗺️' },
+    { id: 6, message: 'Do You Blushing ? read More... 🚀' },
+    { id: 7, message: 'Your Cute texts are like something else... like music 🎵' },
+    { id: 8, message: 'Are you...smiling ? ' },
+    { id: 9, message: 'With you, every day is like .. MMMMMMMMMM 🗺️' },
   ];
 
   const [crackedCookies, setCrackedCookies] = useState<Set<number>>(new Set());

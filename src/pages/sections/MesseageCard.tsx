@@ -102,7 +102,7 @@ export default function MessageCard({ name }: MessageCardProps) {
                     >
                       💝
                     </motion.div>
-                    <h3 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 mb-2">
+                    <h3 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 mb-2">
                       Dear {name},
                     </h3>
                   </div>
@@ -111,24 +111,24 @@ export default function MessageCard({ name }: MessageCardProps) {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.6 }}
-                    className="space-y-4 text-gray-700 text-lg leading-relaxed"
+                    className="space-y-5 text-gray-700 text-xl md:text-2xl leading-relaxed font-semibold"
                   >
                     <p>
-                      On this special day, I want you to know how incredibly grateful I am
-                      to have you in my life. Your smile brightens even the darkest days,
-                      and your presence makes everything better.
+                      Hey Hi looks like i have to write for you, but here's the problem whenver i try to write 
+                      about you, i forgot words.whatever lets start then , So on this special day, I want you to know how incredibly grateful I am
+                      to have you in my life.From the Moment i got you , i felt like i got the best gift in the world.
                     </p>
                     <p>
-                      Every moment we share is a treasure, every laugh is a melody,
-                      and every memory we create together is a gift I'll cherish forever.
+                      Whenever i think about you,Every moment, i get a blushy smile on my face,
+                      Every cute text from you makes my day more special.
                     </p>
                     <p>
-                      May this year bring you endless joy, beautiful surprises,
-                      and all the happiness your heart can hold. You deserve nothing
-                      but the very best, today and always.
+                      You know i love you more than words can say, and i said it earlier whenver i tried to write about you,
+                      i forgot words. whatever i wanted to do for you feels like less to me , i should have done more for you.
+                      You are so good sometimes i feel like i am not good enough for you but you got stuck with me i am so lucky that i got you.
                     </p>
                     <motion.p
-                      className="text-xl font-semibold text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600 pt-4"
+                      className="text-2xl md:text-3xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600 pt-4"
                       animate={{
                         scale: [1, 1.05, 1],
                       }}
@@ -137,7 +137,7 @@ export default function MessageCard({ name }: MessageCardProps) {
                         repeat: Infinity,
                       }}
                     >
-                      Happy Birthday, Beautiful! 🎂✨
+                      Happy Birthday, Tuli! 🎂✨
                     </motion.p>
                   </motion.div>
 
@@ -145,7 +145,7 @@ export default function MessageCard({ name }: MessageCardProps) {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 1 }}
-                    className="mt-8 text-right text-2xl font-semibold text-gray-600 italic"
+                    className="mt-8 text-right text-3xl md:text-4xl font-bold text-gray-600 italic"
                   >
                     With all my love 💕
                   </motion.div>

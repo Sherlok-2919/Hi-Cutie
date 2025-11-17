@@ -4,16 +4,16 @@ import { useMemo, useState, useCallback } from 'react';
 
 export default function PhotoGallery() {
   const photos = [
-    { id: 1, src: '/photos/1.jpg', title: 'Beautiful Moments', subtitle: 'Our Journey Together', color: 'from-pink-400 to-rose-400' },
-    { id: 2, src: '/photos/2.jpg', title: 'Sweet Memories', subtitle: 'Every Smile Counts', color: 'from-purple-400 to-pink-400' },
-    { id: 3, src: '/photos/3.jpg', title: 'Special Days', subtitle: 'Treasured Forever', color: 'from-blue-400 to-purple-400' },
-    { id: 4, src: '/photos/4.jpg', title: 'Happy Times', subtitle: 'With You Always', color: 'from-rose-400 to-pink-400' },
-    { id: 5, src: '/photos/5.jpg', title: 'Pure Joy', subtitle: 'Endless Laughter', color: 'from-pink-400 to-purple-400' },
-    { id: 6, src: '/photos/6.jpg', title: 'Magical Moments', subtitle: 'You & Me', color: 'from-purple-400 to-blue-400' },
-    { id: 7, src: '/photos/7.jpg', title: 'Golden Memories', subtitle: 'Time Stands Still', color: 'from-blue-400 to-pink-400' },
-    { id: 8, src: '/photos/8.jpg', title: 'Forever Us', subtitle: 'Side by Side', color: 'from-rose-400 to-purple-400' },
-    { id: 9, src: '/photos/9.jpg', title: 'Love Story', subtitle: 'Our Adventure', color: 'from-pink-400 to-blue-400' },
-    { id: 10, src: '/photos/10.jpg', title: 'Always & Forever', subtitle: 'Chapter Ten', color: 'from-purple-400 to-amber-400' },
+    { id: 1, src: '/photos/1.jpg', title: 'Beautiful Moments', subtitle: 'A picture of a Cutie', color: 'from-pink-400 to-rose-400' },
+    { id: 2, src: '/photos/2.jpg', title: 'Love Story', subtitle: 'Roses for someone', color: 'from-purple-400 to-pink-400' },
+    { id: 3, src: '/photos/3.jpg', title: 'Special Days', subtitle: 'Lightest Moments', color: 'from-blue-400 to-purple-400' },
+    { id: 4, src: '/photos/4.jpg', title: 'Woking Times', subtitle: 'Elegent Smile', color: 'from-rose-400 to-pink-400' },
+    { id: 5, src: '/photos/5.jpg', title: 'Pure Joy', subtitle: 'Endless Smile', color: 'from-pink-400 to-purple-400' },
+    { id: 6, src: '/photos/6.jpg', title: 'Red beauty', subtitle: 'looks like a princess', color: 'from-purple-400 to-blue-400' },
+    { id: 7, src: '/photos/7.jpg', title: 'B/W', subtitle: 'Time Stands Still', color: 'from-blue-400 to-pink-400' },
+    { id: 8, src: '/photos/8.jpg', title: 'Mmmmm', subtitle: 'Hi Cutie', color: 'from-rose-400 to-purple-400' },
+    { id: 9, src: '/photos/9.jpg', title: 'Love Story', subtitle: 'looks like us', color: 'from-pink-400 to-blue-400' },
+    { id: 10, src: '/photos/10.jpg', title: 'Another One', subtitle: 'Chapter Ten', color: 'from-purple-400 to-amber-400' },
     { id: 11, src: '/photos/11.jpg', title: 'Always & Forever', subtitle: 'Chapter Eleven', color: 'from-purple-400 to-amber-400' },
   ];
 
