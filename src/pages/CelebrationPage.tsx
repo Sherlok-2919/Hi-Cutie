@@ -24,7 +24,7 @@ export default function CelebrationPage({ name }: CelebrationPageProps) {
   const [cakeCut, setCakeCut] = useState(false);
 
   return (
-    <div className="min-h-screen relative overflow-x-hidden">
+    <div className="min-h-screen relative w-full max-w-full overflow-x-hidden overflow-y-auto">
       {/* Global Effects */}
       <CustomCursor />
       <EasterEggs />

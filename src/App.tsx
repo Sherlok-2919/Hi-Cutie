@@ -11,7 +11,7 @@ function App() {
   };
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden">
+    <div className="relative min-h-screen w-full max-w-full overflow-x-hidden">
       <FloatingElements />
       {!userName ? (
         <LandingPage onSubmit={handleNameSubmit} />
