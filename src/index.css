@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+    background-color: #ffeef2;
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.8), rgba(255, 211, 233, 0.5)),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 32 32'%3E%3Cpath fill='%23fbcfe8' d='M16 29s-12-7.5-12-16.5S9.5 0 16 6.5 28 1.5 28 12.5 16 29 16 29z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat, repeat;
+    background-size: cover, 120px 120px;
+    background-attachment: fixed;
+  }
+
+  h1, h2 {
+    font-family: 'Pacifico', cursive;
+  }
+
+  p, .font-handwriting {
+    font-family: 'Caveat', cursive;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@keyframes candle-flicker {
+  0% {
+    transform: scale(1) translateY(0);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.1) translateY(-1px);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.95) translateY(1px);
+    opacity: 0.8;
+  }
+}
+
+.candle-flame {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: candle-flicker 1.1s infinite ease-in-out alternate;
+}
