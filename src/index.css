@@ -57,6 +57,40 @@
   }
 }
 
+.marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.animate-marquee-left {
+  animation-name: marquee-left;
+}
+
+.animate-marquee-right {
+  animation-name: marquee-right;
+}
+
+@keyframes marquee-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-right {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
 @layer utilities {
   @media (prefers-reduced-motion: reduce) {
     * {

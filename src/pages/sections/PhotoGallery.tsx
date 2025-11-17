@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Heart, Camera } from 'lucide-react';
+import { useMemo, useState, useCallback } from 'react';
 
 export default function PhotoGallery() {
   const photos = [
@@ -16,11 +17,20 @@ export default function PhotoGallery() {
     { id: 11, src: '/photos/11.jpg', title: 'Always & Forever', subtitle: 'Chapter Eleven', color: 'from-purple-400 to-amber-400' },
   ];
 
-  const rows = [photos, [...photos].reverse()];
+  const rows = useMemo(() => [photos, [...photos].reverse()], [photos]);
+  const [pausedRows, setPausedRows] = useState<Record<number, boolean>>({});
   const marqueeDuration = 28;
 
+  const pauseRow = useCallback((rowIndex: number) => {
+    setPausedRows((prev) => ({ ...prev, [rowIndex]: true }));
+  }, []);
+
+  const resumeRow = useCallback((rowIndex: number) => {
+    setPausedRows((prev) => ({ ...prev, [rowIndex]: false }));
+  }, []);
+
   return (
-    <section className="py-20 px-4 bg-gradient-to-br from-gray-900 via-purple-900 to-pink-900 text-white relative">
+    <section className="py-20 px-2 sm:px-4 bg-gradient-to-br from-gray-900 via-purple-900 to-pink-900 text-white relative">
       {/* Floating GIFs in gallery */}
       <motion.div
         initial={{ opacity: 0, x: -50 }}
@@ -56,7 +66,7 @@ export default function PhotoGallery() {
         />
       </motion.div>
 
-      <div className="max-w-7xl mx-auto relative z-20">
+      <div className="max-w-full relative z-20">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -77,32 +87,35 @@ export default function PhotoGallery() {
         </motion.div>
 
         <div className="relative">
-          <div className="overflow-hidden rounded-[28px] sm:rounded-[32px] border border-white/10 bg-white/5 backdrop-blur-lg p-4 sm:p-8 shadow-2xl">
+          <div className="overflow-hidden rounded-[0px] sm:rounded-[24px] border border-white/10 bg-white/5 backdrop-blur-lg p-2 sm:p-6 shadow-2xl">
             {/* Top glow */}
             <div className="absolute inset-x-0 top-6 sm:top-10 h-20 sm:h-24 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-pink-500/20 blur-3xl opacity-70 pointer-events-none" />
 
             {/* Endless carousel */}
-            <div className="space-y-8">
-              {[...rows].map((row, rowIndex) => {
-                const direction = rowIndex % 2 === 0 ? ['0%', '-50%'] : ['-50%', '0%'];
+            <div className="space-y-10">
+              {rows.map((row, rowIndex) => {
                 const duration = marqueeDuration + rowIndex * 6;
 
                 return (
-                  <motion.div
+                  <div
                     key={rowIndex}
-                    className="flex gap-8 w-max"
-                    animate={{ x: direction }}
-                    transition={{
-                      repeat: Infinity,
-                      repeatType: 'loop',
-                      duration,
-                      ease: 'linear',
+                    className={`marquee-track gap-8 ${
+                      rowIndex % 2 === 0 ? 'animate-marquee-left' : 'animate-marquee-right'
+                    }`}
+                    style={{
+                      animationDuration: `${duration}s`,
+                      animationPlayState: pausedRows[rowIndex] ? 'paused' : 'running',
                     }}
                   >
                     {[...row, ...row].map((photo, index) => (
                       <div
                         key={`${rowIndex}-${index}-${photo.id}`}
-                        className="group relative flex-shrink-0 w-56 sm:w-64 md:w-72 h-[360px] sm:h-[420px] rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-black/20"
+                        className="group relative flex-shrink-0 w-[240px] xs:w-56 sm:w-64 md:w-72 h-[320px] sm:h-[420px] rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-black/20"
+                        onMouseEnter={() => pauseRow(rowIndex)}
+                        onMouseLeave={() => resumeRow(rowIndex)}
+                        onTouchStart={() => pauseRow(rowIndex)}
+                        onTouchEnd={() => resumeRow(rowIndex)}
+                        onTouchCancel={() => resumeRow(rowIndex)}
                       >
                         <img
                           src={photo.src}
@@ -146,7 +159,7 @@ export default function PhotoGallery() {
                         <div className="absolute inset-0 bg-gradient-to-r from-pink-500/0 via-white/10 to-purple-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                       </div>
                     ))}
-                  </motion.div>
+                  </div>
                 );
               })}
             </div>

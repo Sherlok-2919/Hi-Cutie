@@ -22,6 +22,10 @@ export default function CakeSection({ onCakeCut, cakeCut }: CakeSectionProps) {
   const [showSplitCake, setShowSplitCake] = useState(false);
   const pointerTypeRef = useRef<'mouse' | 'touch' | 'pen'>('mouse');
   const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const moveFrameRef = useRef<number | null>(null);
+  const lastPointRef = useRef<{ x: number; y: number } | null>(null);
+  const MAX_POINTS = 48;
+  const MIN_POINT_DISTANCE = 0.015;
   const sectionStyle = {
     backgroundImage:
       'radial-gradient(circle at 0% 0%, rgba(251, 207, 232, 0.9), transparent 55%), ' +
@@ -42,6 +46,12 @@ export default function CakeSection({ onCakeCut, cakeCut }: CakeSectionProps) {
   useEffect(() => {
     if (typeof window === 'undefined') return;
     setIsTouchDevice(('ontouchstart' in window) || navigator.maxTouchPoints > 0);
+
+    return () => {
+      if (moveFrameRef.current) {
+        cancelAnimationFrame(moveFrameRef.current);
+      }
+    };
   }, []);
 
   const performCakeCut = () => {
@@ -74,6 +84,7 @@ export default function CakeSection({ onCakeCut, cakeCut }: CakeSectionProps) {
     if (cakeCut) return;
     setShowSplitCake(true);
     setCutPoints([]);
+    lastPointRef.current = null;
     performCakeCut();
   };
 
@@ -88,19 +99,41 @@ export default function CakeSection({ onCakeCut, cakeCut }: CakeSectionProps) {
     const y = (e.clientY - rect.top) / rect.height;
 
     setIsCutting(true);
+    lastPointRef.current = { x, y };
     setCutPoints([{ x, y }]);
     e.currentTarget.setPointerCapture?.(e.pointerId);
+  };
+
+  const recordPoint = (x: number, y: number) => {
+    const last = lastPointRef.current;
+    const distance = last ? Math.hypot(x - last.x, y - last.y) : Infinity;
+
+    if (distance < MIN_POINT_DISTANCE) return;
+
+    lastPointRef.current = { x, y };
+    setCutPoints((prev) => {
+      const next = [...prev, { x, y }];
+      if (next.length > MAX_POINTS) {
+        return next.slice(next.length - MAX_POINTS);
+      }
+      return next;
+    });
   };
 
   const moveCut = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!isCutting || cakeCut) return;
     if (!containerRef.current) return;
 
-    const rect = containerRef.current.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width;
-    const y = (e.clientY - rect.top) / rect.height;
+    if (moveFrameRef.current) return;
 
-    setCutPoints(prev => [...prev, { x, y }]);
+    moveFrameRef.current = requestAnimationFrame(() => {
+      moveFrameRef.current = null;
+      if (!containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width;
+      const y = (e.clientY - rect.top) / rect.height;
+      recordPoint(x, y);
+    });
   };
 
   const endCut = (e?: React.PointerEvent<HTMLDivElement>) => {
