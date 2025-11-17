@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import LandingPage from './components/LandingPage';
-import CelebrationPage from './components/CelebrationPage';
-import FloatingElements from './components/FloatingElements';
+import LandingPage from './pages/LandingPage';
+import CelebrationPage from './pages/CelebrationPage';
+import FloatingElements from './pages/sections/FloatingElements';
 
 function App() {
   const [userName, setUserName] = useState<string | null>(null);

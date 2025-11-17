@@ -32,6 +32,29 @@
   html {
     scroll-behavior: smooth;
   }
+
+  @media (max-width: 640px) {
+    body {
+      font-size: 0.95rem;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 8vw, 2.75rem);
+    }
+
+    h2 {
+      font-size: clamp(1.6rem, 7vw, 2.25rem);
+    }
+
+    section {
+      padding-top: clamp(2rem, 8vw, 3.5rem);
+      padding-bottom: clamp(2rem, 8vw, 3.5rem);
+    }
+
+    .rounded-3xl {
+      border-radius: 1.5rem;
+    }
+  }
 }
 
 @layer utilities {
