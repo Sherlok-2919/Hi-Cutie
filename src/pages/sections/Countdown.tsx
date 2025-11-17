@@ -11,11 +11,20 @@ interface TimeLeft {
 
 export default function Countdown() {
   const calculateTimeLeft = (): TimeLeft => {
-    const nextBirthday = new Date();
-    nextBirthday.setFullYear(nextBirthday.getFullYear() + 1);
-    nextBirthday.setMonth(10); // November (0-indexed)
-    nextBirthday.setDate(16);
-    nextBirthday.setHours(0, 0, 0, 0);
+    const now = new Date();
+    const birthdayThisYear = new Date(
+      now.getFullYear(),
+      10, // November
+      18,
+      0,
+      0,
+      0,
+      0
+    );
+    const nextBirthday =
+      now > birthdayThisYear
+        ? new Date(now.getFullYear() + 1, 10, 18, 0, 0, 0, 0)
+        : birthdayThisYear;
 
     const difference = nextBirthday.getTime() - new Date().getTime();
 

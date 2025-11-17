@@ -1,16 +1,34 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Download, Camera, VideoOff } from 'lucide-react';
 
 type CameraStatus = 'idle' | 'loading' | 'ready' | 'error';
+
+const FILTER_PRESETS = [
+  { id: 'original', label: 'Original', css: 'none' },
+  { id: 'soft-glow', label: 'Soft Glow', css: 'brightness(1.08) contrast(1.05) saturate(1.2)' },
+  { id: 'vintage', label: 'Vintage', css: 'sepia(0.4) contrast(1.05) saturate(1.1) hue-rotate(-10deg)' },
+  { id: 'dreamy', label: 'Dreamy', css: 'blur(0px) brightness(1.1) saturate(1.3)' },
+];
 
 export default function PolaroidBooth() {
   const [captured, setCaptured] = useState(false);
   const [imageData, setImageData] = useState<string>('');
   const [cameraStatus, setCameraStatus] = useState<CameraStatus>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+  const [selectedFilter, setSelectedFilter] = useState(FILTER_PRESETS[0].id);
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
+
+  const activeFilter = useMemo(
+    () => FILTER_PRESETS.find((preset) => preset.id === selectedFilter)?.css ?? 'none',
+    [selectedFilter]
+  );
+
+  const stopStream = () => {
+    streamRef.current?.getTracks().forEach((track) => track.stop());
+    streamRef.current = null;
+  };
 
   const startCamera = useCallback(async () => {
     if (cameraStatus === 'loading') return;
@@ -25,19 +43,39 @@ export default function PolaroidBooth() {
     setCameraStatus('loading');
 
     try {
+      stopStream();
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: 'user', width: { ideal: 1080 }, height: { ideal: 1080 } },
+        video: {
+          facingMode: 'user',
+          width: { ideal: 1080 },
+          height: { ideal: 1080 },
+        },
         audio: false,
       });
 
       streamRef.current = stream;
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-        await videoRef.current.play();
+      const videoElement = videoRef.current;
+
+      if (videoElement) {
+        videoElement.srcObject = stream;
+        videoElement.setAttribute('playsinline', 'true');
+        videoElement.autoplay = true;
+        videoElement.muted = true;
+        videoElement.onloadedmetadata = async () => {
+          try {
+            await videoElement.play();
+            setCameraStatus('ready');
+          } catch (playError) {
+            console.warn('Autoplay prevented, waiting for user gesture', playError);
+            setCameraStatus('ready');
+          }
+        };
+      } else {
+        setCameraStatus('ready');
       }
+
       setCaptured(false);
       setImageData('');
-      setCameraStatus('ready');
     } catch (error) {
       console.error('Unable to start camera', error);
       setErrorMessage('Camera permission is required to take a photo. Please allow access and try again.');
@@ -47,7 +85,7 @@ export default function PolaroidBooth() {
 
   useEffect(() => {
     return () => {
-      streamRef.current?.getTracks().forEach(track => track.stop());
+      stopStream();
     };
   }, []);
 
@@ -64,6 +102,7 @@ export default function PolaroidBooth() {
     const context = canvas.getContext('2d');
     if (!context) return;
 
+    context.filter = activeFilter;
     context.drawImage(video, 0, 0, width, height);
     const imgData = canvas.toDataURL('image/png');
     setImageData(imgData);
@@ -113,13 +152,16 @@ export default function PolaroidBooth() {
                     ref={videoRef}
                     muted
                     playsInline
+                    autoPlay
                     className="w-full h-full object-cover"
+                    style={{ filter: activeFilter }}
                   />
                 ) : captured ? (
                   <img
                     src={imageData}
                     alt="Captured memory"
                     className="w-full h-full object-cover"
+                    style={{ filter: activeFilter }}
                   />
                 ) : (
                   <div className="text-center p-8 text-gray-700 space-y-4">
@@ -155,6 +197,27 @@ export default function PolaroidBooth() {
               </div>
             </div>
           </motion.div>
+
+          <div className="w-full max-w-md">
+            <p className="text-center text-sm uppercase tracking-[0.3em] text-gray-500 mb-3">
+              Filters
+            </p>
+            <div className="flex flex-wrap justify-center gap-3">
+              {FILTER_PRESETS.map((preset) => (
+                <button
+                  key={preset.id}
+                  onClick={() => setSelectedFilter(preset.id)}
+                  className={`px-4 py-2 rounded-full border text-sm font-semibold transition ${
+                    preset.id === selectedFilter
+                      ? 'bg-gradient-to-r from-pink-500 to-purple-500 text-white border-transparent shadow-lg'
+                      : 'bg-white/70 text-gray-700 border-gray-200 hover:border-pink-300'
+                  }`}
+                >
+                  {preset.label}
+                </button>
+              ))}
+            </div>
+          </div>
 
           {/* Controls */}
           <div className="flex flex-wrap gap-4 justify-center">
